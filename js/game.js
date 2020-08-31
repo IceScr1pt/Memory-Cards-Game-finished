@@ -56,6 +56,8 @@ function checkCardsMatch(card1, card2) {
   if (firstCard === secondCard) {
     console.log('cards match');
     flippedCards++;
+    card1.classList.add('found');
+    card2.classList.add('found');
     if (flippedCards !== TOTAL_CARD_PAIRS) {
       correctAudio.play();
     }
@@ -82,9 +84,10 @@ function checkCardsMatch(card1, card2) {
 function restartGame() {
   //Shuffle the cards
   shuffleCards();
-  //Flip all the cards back
+  //Flip all the cards back and remove found
   elAllCards.forEach((card) => {
     card.classList.remove('flipped');
+    card.classList.remove('found');
   });
   //rest flipped cards
   flippedCards = 0;
@@ -267,15 +270,20 @@ function cheat(btn) {
     //fix the issue that the user can click again on the btn and because of the alert he can see the cards for a long time until he press ok;
     btn.disabled = true;
     elAllCards.forEach((card) => {
-      card.classList.add('flipped');
-    });
-    setTimeout(() => {
-      elAllCards.forEach((card) => {
-        card.classList.remove('flipped');
+      //check if the card is not flipped, if not then we flip it
+      if (!card.classList.contains('flipped')) {
+        card.classList.add('flipped');
+      }
+      setTimeout(() => {
         btn.disabled = false;
-        console.log('cheat-over');
-      });
-    }, 800);
+        elAllCards.forEach((card) => {
+          //if the card not contains a found class it means this class isn't found yet, and we remove it!
+          if (!card.classList.contains('found')) {
+            card.classList.remove('flipped');
+          }
+        });
+      }, 1000);
+    });
   } else {
     alert('You already used this feature  😭');
     return;
