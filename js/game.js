@@ -282,7 +282,7 @@ function cheat(btn) {
             card.classList.remove('flipped');
           }
         });
-      }, 1000);
+      }, 800);
     });
   } else {
     alert('You already used this feature  😭');
