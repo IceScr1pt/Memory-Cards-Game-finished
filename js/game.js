@@ -35,6 +35,7 @@ function cardClicked(elCard) {
     //start the clock when the user clicks on the first card
     if (!isGameStarted) {
       isGameStarted = true;
+      //Start the timer
       interval = setInterval(stopWatch, 10);
     }
     console.log('first card');
@@ -56,6 +57,7 @@ function checkCardsMatch(card1, card2) {
   if (firstCard === secondCard) {
     console.log('cards match');
     flippedCards++;
+    //add to both cards a 'found' class if they have been found in order to know that i dont need to flip them back in cheat mode.
     card1.classList.add('found');
     card2.classList.add('found');
     if (flippedCards !== TOTAL_CARD_PAIRS) {
@@ -173,7 +175,7 @@ function formatCounterToTime(time) {
 function changeUser() {
   let name = prompt(`Please Enter your name`);
   if (!name) {
-    name = null;
+    name = 'Anonymous';
   }
   localStorage.setItem('name', name);
   elNameSpan.innerText = `${

@@ -244,8 +244,16 @@ header img {
     font-size: 2rem;
   }
 
+  #made {
+    margin: 0.5rem;
+    font-size: 1.2rem;
+  }
+
+  .welcome {
+    display: block;
+  }
   .welcome p {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   #logo {
@@ -260,18 +268,30 @@ header img {
     width: 100%;
   }
   .card {
-    flex: 0 0 33.333%;
+    /* flex: 0 0 33%; */
+    width: 28%;
+    height: 20%;
+    margin: 1;
   }
 
   .cheat {
+    margin-top: 8rem;
+    position: relative;
+  }
+
+  .cheat h3 {
+    font-size: 2rem;
+    position: absolute;
+    right: 0;
+    left: 0;
+  }
+  #cheat-btn {
+    padding: 1.5rem 3rem;
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     text-align: center;
-  }
-
-  #cheat-btn {
-    padding: 1.5rem 3rem;
+    margin: auto;
   }
 }
