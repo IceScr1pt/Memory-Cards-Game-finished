@@ -20,6 +20,11 @@ header img {
   margin: 0.5rem;
 }
 
+body {
+  background: #1d0458;
+  color: white;
+}
+
 .intro {
   min-height: 10vh;
   display: flex;
@@ -35,10 +40,14 @@ header img {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid black;
+  border: 3px solid white;
   border-radius: 1rem;
-  padding: 1rem;
+  padding: 3rem;
   position: relative;
+}
+
+.information .mode {
+  display: block;
 }
 
 .information #dashboard {
@@ -64,8 +73,18 @@ header img {
   margin: 0.5rem;
 }
 
+#time {
+  font-size: 2.5rem;
+  color: red;
+}
+
+#score,
+#worst-score {
+  font-size: 2.2rem;
+}
+
 #change-user {
-  background: darkblue;
+  background: #005b96;
   color: white;
   font-family: cursive;
   border: 0;
@@ -93,8 +112,26 @@ header img {
   height: 25%;
   position: relative;
   margin: 1rem;
-  transition: transform 1s ease;
+  transition: all 1s ease;
   cursor: pointer;
+  background-color: #f8f8f8;
+  border-radius: 1rem;
+}
+
+/*Style of cards based of modes*/
+.card.large-mode {
+  width: 22%;
+  height: 20%;
+}
+
+.card.medium-mode {
+  width: 20%;
+  height: 25%;
+}
+
+.card.small-mode {
+  width: 25%;
+  height: 30%;
 }
 
 .card img {
@@ -103,7 +140,6 @@ header img {
   padding: 2rem;
   /*position the cards on top of each other*/
   position: absolute;
-  background-color: #f8f8f8;
   border-radius: 1rem;
 }
 
@@ -122,7 +158,7 @@ header img {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  border-top: 2px solid rgba(200, 200, 200, 0.4);
+  /* border-top: 2px solid rgba(200, 200, 200, 0.4); */
   width: 50%;
   margin: 0.5rem auto;
   text-align: center;
@@ -134,16 +170,19 @@ header img {
   margin: 0.5rem;
 }
 
-.play-again-container.show {
+.play-again-container.show,
+.pick-mode-container.show {
   display: flex;
+  opacity: 1;
 }
 
-.play-again-container.show .cheat button {
+/* .play-again-container.show .cheat button {
   pointer-events: none;
-}
+} */
 
 /*style for restart popup*/
-.play-again-container {
+.play-again-container,
+.pick-mode-container {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -158,20 +197,15 @@ header img {
   display: none;
   transition: all 0.5s ease;
   z-index: 100;
-}
-
-.play-popup {
-  background: #fff;
-  padding: 10rem;
-  border-radius: 1rem;
-  display: flex;
-  flex-direction: column;
+  transition: all 0.5s ease;
+  animation: fade 0.5s ease-in-out;
 }
 
 .play-popup h2 {
-  font-size: 2rem;
+  font-size: 3rem;
   font-family: cursive;
   margin: 0.5rem;
+  color: black;
 }
 
 .play-popup button {
@@ -182,9 +216,62 @@ header img {
   border: none;
   border-radius: 0.5rem;
   font-family: monospace, sans-serif;
-  width: 80%;
+  font-size: 2.5rem;
+  width: 50%;
   margin: auto;
   cursor: pointer;
+}
+.play-popup {
+  background: #fff;
+  padding: 10rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/*style for pick-mode*/
+.pick-mode-popup {
+  text-align: center;
+  background: #fff;
+  display: inline-block;
+  padding: 5rem;
+  border-radius: 1rem;
+}
+
+.pick-mode-popup h3 {
+  font-size: 4rem;
+  font-family: monospace, sans-serif;
+  margin: 0.5rem;
+  color: black;
+}
+
+.pick-mode-popup button {
+  padding: 1.5rem 5rem;
+  font-family: cursive, sans-serif;
+  border: 0;
+  outline: 0;
+  border-radius: 1rem;
+  cursor: pointer;
+  margin: 1rem;
+  color: white;
+  font-size: 2rem;
+}
+
+.pick-mode-popup button:hover {
+  opacity: 0.7;
+}
+
+/*style for pick-mode buttons*/
+#small {
+  background: #368fd3;
+}
+
+#medium {
+  background: #1d0458;
+}
+
+#large {
+  background: #9f41a4;
 }
 
 .cheat {
@@ -209,18 +296,69 @@ header img {
   border-radius: 1rem;
   cursor: pointer;
   font-family: cursive;
-  transition: transform 0.5s ease;
+  transition: all 2s ease;
   font-size: 2rem;
+  animation: rainbow 3s infinite ease;
 }
 
 #cheat-btn:active {
   transform: scale(0.9);
 }
 
+/*made with span*/
 #made {
   display: block;
   font-size: 1rem;
   font-family: cursive;
+}
+
+/*animations*/
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rainbow {
+  0% {
+    background: #9f41a4;
+  }
+  10% {
+    background: #ca1c1c;
+  }
+
+  20% {
+    background: #3078c0;
+  }
+
+  30% {
+    background: #30c03e;
+  }
+
+  40% {
+    background: #704300;
+  }
+  50% {
+    background: #5b013e;
+  }
+  60% {
+    background: #72d5f9;
+  }
+  70% {
+    background: #207480;
+  }
+  80% {
+    background: #fff41a;
+  }
+  90% {
+    background: #f60e92;
+  }
+  100% {
+    background: #21200a;
+  }
 }
 
 /*Media query*/
@@ -249,6 +387,9 @@ header img {
     font-size: 1.2rem;
   }
 
+  #dashboard {
+    display: none;
+  }
   .welcome {
     display: block;
   }
@@ -260,6 +401,10 @@ header img {
     height: 10rem;
     width: 10rem;
   }
+
+  #time {
+    font-size: 2rem;
+  }
   .cards-container {
     /* min-height: 80vh; */
     display: flex;
@@ -269,13 +414,28 @@ header img {
   }
   .card {
     /* flex: 0 0 33%; */
-    width: 28%;
+    width: 10%;
     height: 20%;
-    margin: 1;
+    margin: 1rem;
+  }
+
+  .card.medium-mode {
+    width: 28%;
+    height: 15%;
+  }
+
+  .card.small-mode {
+    width: 29%;
+    height: 20%;
+  }
+
+  .card.large-mode {
+    width: 21%;
+    height: 15%;
   }
 
   .cheat {
-    margin-top: 8rem;
+    margin-top: 4rem;
     position: relative;
   }
 
@@ -290,8 +450,18 @@ header img {
     position: absolute;
     bottom: 0;
     left: 0;
+    right: 0;
     width: 100%;
     text-align: center;
     margin: auto;
+  }
+
+  .pick-mode-popup {
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .pick-mode-popup h3 {
+    font-size: 3.5rem;
   }
 }

@@ -22,10 +22,11 @@
             <p><span id="name"></span></p>
         </div>
         <div class="information">
-            <span id="dashboard">Dashboard</span>
+            <!-- <span id="dashboard">Dashboard</span> -->
             <p>🏆 Best Score:<span id="score"></span></p>
             <p> 👻 Worst Score:<span id="worst-score"></span></p>
             <p>⏲️ Time:<span id="time">Game has not started</span></p>
+            <p class="mode">Mode: <span id="game-mode"></span></p>
         </div>
     </header>
     <div class="cards-container">
@@ -81,6 +82,42 @@
             <img src="cards/card6.png" />
             <img class="back" src="cards/back.png" alt="">
         </div>
+        <!--Expand to other modes-->
+        <div class="card large" data-card="7" onclick="cardClicked(this)">
+            <img src="cards/card7.png" />
+            <img class="back" src="cards/back.png" alt="">
+        </div>
+        <div class="card large" data-card="7" onclick="cardClicked(this)">
+            <img src="cards/card7.png" />
+            <img class="back" src="cards/back.png" alt="">
+        </div>
+        <div class="card large" data-card="8" onclick="cardClicked(this)">
+            <img src="cards/card8.png" />
+            <img class="back" src="cards/back.png" alt="">
+        </div>
+        <div class="card large" data-card="8" onclick="cardClicked(this)">
+            <img src="cards/card8.png" />
+            <img class="back" src="cards/back.png" alt="">
+        </div>
+        <div class="card large" data-card="9" onclick="cardClicked(this)">
+            <img src="cards/card9.png" alt="">
+            <img class="back" src="cards/back.png" alt="">
+
+        </div>
+        <div class="card large" data-card="9" onclick="cardClicked(this)">
+            <img src="cards/card9.png" alt="">
+            <img class="back" src="cards/back.png" alt="">
+        </div>
+        <div class="card large" data-card="10" onclick="cardClicked(this)">
+            <img src="cards/card10.png" alt="">
+            <img class="back" src="cards/back.png" alt="">
+
+        </div>
+        <div class="card large" data-card="10" onclick="cardClicked(this)">
+            <img src="cards/card10.png" alt="">
+            <img class="back" src="cards/back.png" alt="">
+        </div>
+
     </div>
     <div class="play-again-container">
         <div class="play-popup">
@@ -91,6 +128,14 @@
     <div class="cheat">
         <h3>You can peek on the cards 1 time</h3>
         <button id="cheat-btn" onclick="cheat(this)">👀 Cheat</button>
+    </div>
+    <div class="pick-mode-container">
+        <div class="pick-mode-popup">
+            <h3>Pick Game Mode <span id="logo-smile">🥳</span></h3>
+            <button id="small" onclick="pickMode(this)">Easy</button>
+            <button id="medium" onclick="pickMode(this)">Medium</button>
+            <button id="large" onclick="pickMode(this)">Hard</button>
+        </div>
     </div>
     <script src="js/game.js"></script>
 </body>

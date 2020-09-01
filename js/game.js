@@ -2,6 +2,10 @@
 const elAllCards = document.querySelectorAll('.card');
 const playBtn = document.querySelector('#play-game');
 const playAgainContainer = document.querySelector('.play-again-container');
+const pickModeContainer = document.querySelector('.pick-mode-container');
+
+const elGameModeSpan = document.querySelector('#game-mode');
+
 const elNameSpan = document.querySelector('#name');
 const elTimeSpan = document.querySelector('#time');
 const elBestScoreSpan = document.querySelector('#score');
@@ -13,7 +17,7 @@ const wrongAudio = new Audio('sound/wrong.mp3');
 const winAudio = new Audio('sound/win.mp3');
 
 //Number of card pairs
-const TOTAL_CARD_PAIRS = 6;
+let TOTAL_CARD_PAIRS = 6;
 let elPrevCard = null;
 let flippedCards = 0;
 //Control that only 2 cards can be flipped
@@ -23,6 +27,12 @@ let counter = 0;
 let isGameStarted = false;
 //interval for the timer
 let interval = null;
+//game mode
+let gameMode = null;
+
+elAllCards.forEach((card) => {
+  card.style.display = 'none';
+});
 
 function cardClicked(elCard) {
   //Check if card is still flipped
@@ -86,7 +96,7 @@ function checkCardsMatch(card1, card2) {
 function restartGame() {
   //Shuffle the cards
   shuffleCards();
-  //Flip all the cards back and remove found
+  //Flip all the cards back and remove the found class from all
   elAllCards.forEach((card) => {
     card.classList.remove('flipped');
     card.classList.remove('found');
@@ -109,35 +119,86 @@ function restartGame() {
   formatted = null;
   //Restart cheat feature
   isCheated = false;
+  //show pick mode container
+  pickModeContainer.classList.add('show');
 }
 
 //set score and get stats from localStorage
 function gameStats(score) {
-  //formatb
+  //format the counter to time format 00:00:00
   let formatted = formatCounterToTime(score);
-  console.log(formatted);
-  //check if there is a best score already, if not set a new best score
-  if (localStorage.getItem('bestScore') === null) {
-    localStorage.setItem('bestScore', score);
-    elBestScoreSpan.innerText = `${formatted}`;
-  } else {
-    //if there is a best score, check if the new score is better than the current best score
-    let currScore = localStorage.getItem('bestScore');
-    if (score < currScore) {
-      console.log(`${score} is quicker than ${currScore}`);
-      //set a new best score
-      localStorage.setItem('bestScore', score);
-      elBestScoreSpan.innerText = `${formatted}`;
-    } else {
-      if (localStorage.getItem('worstScore') === null) {
-        localStorage.setItem('worstScore', currScore);
+  switch (gameMode) {
+    case 1:
+      if (localStorage.getItem('bestScoreHard') === null) {
+        localStorage.setItem('bestScoreHard', score);
+        elBestScoreSpan.innerText = `${formatted}`;
       }
-      let currWorstScore = localStorage.getItem('worstScore');
-      if (score > currWorstScore) {
-        localStorage.setItem('worstScore', score);
-        elWorstScoreSpan.innerText = `${formatted}`;
+      const currHardScore = localStorage.getItem('bestScoreHard');
+      //check if the score is better than the currentHardScore that in storage
+      if (score < currHardScore) {
+        //set a new best score for the hard mode
+        localStorage.setItem('bestScoreHard', score);
+        elBestScoreSpan.innerText = `${formatted}`;
+      } else {
+        //check if there is already a worst score in easy mode, if not set one
+        if (localStorage.getItem('worstScoreHard') === null) {
+          localStorage.setItem('worstScoreHard', score);
+          elWorstScoreSpan.innerText = `${formatted}`;
+        }
+        let currWorstScoreHard = localStorage.getItem('worstScoreHard');
+        //check if the score is greater than the current worst score, if so we have a new worst score.
+        if (score > currWorstScoreHard) {
+          localStorage.setItem('worstScoreHard', score);
+          elWorstScoreSpan.innerText = `${formatted}`;
+        }
       }
-    }
+      break;
+    case 2:
+      if (localStorage.getItem('bestScoreMedium') === null) {
+        localStorage.setItem('bestScoreMedium', score);
+        elBestScoreSpan.innerText = `${formatted}`;
+      }
+      const currMediumScore = localStorage.getItem('bestScoreMedium');
+      if (score < currMediumScore) {
+        //set a new best score for the hard mode
+        localStorage.setItem('bestScoreMedium', score);
+        elBestScoreSpan.innerText = `${formatted}`;
+      } else {
+        if (localStorage.getItem('worstScoreMedium') === null) {
+          localStorage.setItem('worstScoreMedium', score);
+          elWorstScoreSpan.innerText = `${formatted}`;
+        }
+        let currWorstScoreMedium = localStorage.getItem('worstScoreMedium');
+        if (score > currWorstScoreMedium) {
+          localStorage.setItem('worstScoreMedium', score);
+          elWorstScoreSpan.innerText = `${formatted}`;
+        }
+      }
+      break;
+    case 3:
+      if (localStorage.getItem('bestScoreEasy') === null) {
+        localStorage.setItem('bestScoreEasy', score);
+        elBestScoreSpan.innerText = `${formatted}`;
+      }
+      const currEasyScore = localStorage.getItem('bestScoreEasy');
+      //if the score is greater than the current hard score there is a new best score
+      if (score < currEasyScore) {
+        localStorage.setItem('bestScoreEasy', score);
+        elBestScoreSpan.innerText = `${formatted}`;
+      } else {
+        //check if there is already a worst score in easy mode, if not set one
+        if (localStorage.getItem('worstScoreEasy') === null) {
+          localStorage.setItem('worstScoreEasy', score);
+          elWorstScoreSpan.innerText = `${formatted}`;
+        }
+        let currWorstScoreEasy = localStorage.getItem('worstScoreEasy');
+        //check if the score is greater than the current worst score, if so we have a new worst score.
+        if (score > currWorstScoreEasy) {
+          localStorage.setItem('worstScoreEasy', score);
+          elWorstScoreSpan.innerText = `${formatted}`;
+        }
+      }
+      break;
   }
 }
 
@@ -157,20 +218,6 @@ function formatCounterToTime(time) {
   }
   return `${hours}:${minutes}:${seconds}`;
 }
-
-//Original timer
-// function startClock() {
-//   let id = setInterval(() => {
-//     if (flippedCards !== TOTAL_CARD_PAIRS) {
-//       counter++;
-//       elTimeSpan.innerText = `${counter} seconds`;
-//     } else {
-//       //set the game back
-//       clearInterval(id);
-//     }
-//   }, 1000);
-//   console.log(id);
-// }
 
 function changeUser() {
   let name = prompt(`Please Enter your name`);
@@ -193,21 +240,56 @@ function getLocalStorageData() {
       ? 'Welcome Anonymous User!'
       : `Welcome, ${user} 😜!`
   }`;
-  let bestScore = localStorage.getItem('bestScore');
-  let formatBestScore = formatCounterToTime(bestScore);
-  elBestScoreSpan.innerText = `${
-    bestScore === null ? 'None' : `${formatBestScore}`
-  }`;
 
-  let worstScore = localStorage.getItem('worstScore');
-  let formatWorstScore = formatCounterToTime(worstScore);
-  elWorstScoreSpan.innerText = `${
-    worstScore === null ? 'None' : `${formatWorstScore}`
-  }`;
+  // //Show the current Best score and the current Worst score based on the game MODE!
+  // switch (gameMode) {
+  //   case 1:
+  //     let hardBestScore = formatCounterToTime(
+  //       localStorage.getItem('bestScoreHard')
+  //     );
+  //     elBestScoreSpan.innerText = `${
+  //       !hardBestScore === null ? 'None' : `${hardBestScore}`
+  //     }`;
+  //     let worstScoreHard = formatCounterToTime(
+  //       localStorage.getItem('worstScoreHard')
+  //     );
+  //     elWorstScoreSpan.innerText = `${
+  //       worstScoreHard === null ? 'None' : `${worstScoreHard}`
+  //     }`;
+  //     break;
+  //   case 2:
+  //     let mediumBestScore = formatCounterToTime(
+  //       localStorage.getItem('bestScoreMedium')
+  //     );
+  //     elBestScoreSpan.innerText = `${
+  //       mediumBestScore === null ? 'None' : `${mediumBestScore}`
+  //     }`;
+  //     let mediumWorstScore = formatCounterToTime(
+  //       localStorage.getItem('worstScoreMedium')
+  //     );
+  //     elWorstScoreSpan.innerText = `${
+  //       mediumWorstScore === null ? 'None' : `${mediumWorstScore}`
+  //     }`;
+  //     break;
+  //   case 3:
+  //     let easyBestScore = formatCounterToTime(
+  //       localStorage.getItem('bestScoreEasy')
+  //     );
+  //     elBestScoreSpan.innerText = `${
+  //       easyBestScore === null ? 'None' : `${easyBestScore}`
+  //     }`;
+  //     let easyWorstScore = formatCounterToTime(
+  //       localStorage.getItem('worstScoreEasy')
+  //     );
+  //     elWorstScoreSpan.innerText = `${
+  //       easyWorstScore === null ? 'None' : `${easyWorstScore}`
+  //     }`;
+  //     break;
 }
 
 //check if we already have a name, if not we get the user name
 if (localStorage.getItem('name') === null) {
+  pickModeContainer.classList.add('show');
   changeUser();
 }
 
@@ -261,11 +343,27 @@ function stopWatch() {
   elTimeSpan.innerText = `${displayHours}:${displayMinutes}:${displaySeconds}.${displayMiliSeconds}`;
 }
 
+//Show the cards for a X amount of seconds in the beginning when we pick a mode.
+function showCards(amountOfSeconds) {
+  elAllCards.forEach((card) => {
+    card.classList.add('flipped');
+  });
+  setTimeout(() => {
+    elAllCards.forEach((card) => {
+      card.classList.remove('flipped');
+    });
+  }, amountOfSeconds);
+}
+
 //This function handles the cheat feature
 let isCheated = false;
 function cheat(btn) {
   console.log(btn);
   console.log('You can cheat 1 time');
+  if (!isGameStarted) {
+    alert('You can cheat only when game begins');
+    return;
+  }
   //if the user didnt clicked on the cheat btn flip the cards for a little
   if (!isCheated) {
     isCheated = true;
@@ -281,10 +379,14 @@ function cheat(btn) {
         elAllCards.forEach((card) => {
           //if the card not contains a found class it means this class isn't found yet, and we remove it!
           if (!card.classList.contains('found')) {
+            //if we cheat and we a card already flipped i want this card to stay flipped
+            if (elPrevCard !== null) {
+              elPrevCard.classList.add('flipped');
+            }
             card.classList.remove('flipped');
           }
         });
-      }, 800);
+      }, 1000);
     });
   } else {
     alert('You already used this feature  😭');
@@ -292,6 +394,107 @@ function cheat(btn) {
   }
 }
 
+//Pick a game mode
+function pickMode(btn) {
+  console.log(btn.id);
+  switch (btn.id) {
+    case 'large':
+      gameMode = 1;
+      TOTAL_CARD_PAIRS = 10;
+      //show current game-mode
+      elGameModeSpan.innerText = `Hard`;
+      elBestScoreSpan.innerText = formatCounterToTime(
+        localStorage.getItem('bestScoreHard')
+      );
+      elWorstScoreSpan.innerText = formatCounterToTime(
+        localStorage.getItem('worstScoreHard')
+      );
+      showCards(5000);
+      //Show the cards for x amount of seconds
+      elAllCards.forEach((card) => {
+        let dataCard = card.getAttribute('data-card');
+        let possibleCards = '12345678910';
+        if (possibleCards.includes(dataCard)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+        if (
+          card.classList.contains('medium-mode') ||
+          card.classList.contains('small-mode')
+        ) {
+          card.classList.remove('medium-mode');
+          card.classList.remove('small-mode');
+        }
+        card.classList.add('large-mode');
+        pickModeContainer.classList.remove('show');
+      });
+      break;
+    case 'medium':
+      TOTAL_CARD_PAIRS = 6;
+      gameMode = 2;
+      elGameModeSpan.innerText = `Medium`;
+      elBestScoreSpan.innerText = formatCounterToTime(
+        localStorage.getItem('bestScoreMedium')
+      );
+      elWorstScoreSpan.innerText = formatCounterToTime(
+        localStorage.getItem('worstScoreMedium')
+      );
+      showCards(3000);
+      elAllCards.forEach((card) => {
+        let dataCard = card.getAttribute('data-card');
+        let possibleCards = '123456';
+        if (possibleCards.includes(dataCard)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+        if (
+          card.classList.contains('large-mode') ||
+          card.classList.contains('small-mode')
+        ) {
+          card.classList.remove('large-mode');
+          card.classList.remove('small-mode');
+        }
+        card.classList.add('medium-mode');
+        pickModeContainer.classList.remove('show');
+      });
+      break;
+    case 'small':
+      gameMode = 3;
+      TOTAL_CARD_PAIRS = 4;
+      elGameModeSpan.innerText = `Easy`;
+      elBestScoreSpan.innerText = formatCounterToTime(
+        localStorage.getItem('bestScoreEasy')
+      );
+      elWorstScoreSpan.innerText = formatCounterToTime(
+        localStorage.getItem('worstScoreEasy')
+      );
+      showCards(1500);
+      elAllCards.forEach((card) => {
+        let dataCard = card.getAttribute('data-card');
+        let possibleCards = '1234';
+        if (possibleCards.includes(dataCard)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+        if (
+          card.classList.contains('large-mode') ||
+          card.classList.contains('medium-mode')
+        ) {
+          card.classList.remove('large-mode');
+          card.classList.remove('medium-mode');
+        }
+        card.classList.add('small-mode');
+        pickModeContainer.classList.remove('show');
+      });
+      break;
+  }
+}
+
 //Load data from localStorage
 document.addEventListener('DOMContentLoaded', getLocalStorageData);
+//show mode
+pickModeContainer.classList.add('show');
 shuffleCards();
