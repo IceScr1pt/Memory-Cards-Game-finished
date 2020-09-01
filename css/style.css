@@ -245,6 +245,10 @@ body {
   color: black;
 }
 
+.pick-mode-popup span {
+  font-size: 2rem;
+}
+
 .pick-mode-popup button {
   padding: 1.5rem 5rem;
   font-family: cursive, sans-serif;
