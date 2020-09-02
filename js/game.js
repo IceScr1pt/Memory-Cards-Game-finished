@@ -229,7 +229,7 @@ function changeUser() {
     name !== null
       ? `Welcome, ${localStorage.getItem('name')} 😜 !`
       : `Welcome,Anonymous! 💀`
-  }`;
+    }`;
 }
 
 //load data from localStorage when page refreshes
@@ -239,7 +239,7 @@ function getLocalStorageData() {
     user === null || user === ''
       ? 'Welcome Anonymous User!'
       : `Welcome, ${user} 😜!`
-  }`;
+    }`;
 
   // //Show the current Best score and the current Worst score based on the game MODE!
   // switch (gameMode) {
@@ -334,7 +334,7 @@ function stopWatch() {
   //add a leading 0 if seconds/minutes/hours is a 1 digit
   let displayMiliSeconds = `${
     miliSeconds > 90 ? miliSeconds : `0${miliSeconds}`
-  }`;
+    }`;
   let displaySeconds = `${seconds < 10 ? `0${seconds}` : `${seconds}`}`;
   let displayMinutes = `${minutes < 10 ? `0${minutes}` : `${minutes}`}`;
   let displayHours = `${hours < 10 ? `0${hours}` : `${hours}`}`;
@@ -437,8 +437,7 @@ function pickMode(btn) {
       elBestScoreSpan.innerText = formatCounterToTime(
         localStorage.getItem('bestScoreMedium')
       );
-      elWorstScoreSpan.innerText = formatCounterToTime(
-        localStorage.getItem('worstScoreMedium')
+      elWorstScoreSpan.innerText = formatCounterToTime(localStorage.getItem('worstScoreMedium')
       );
       showCards(3000);
       elAllCards.forEach((card) => {
