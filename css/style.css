@@ -125,12 +125,12 @@ body {
 }
 
 .card.medium-mode {
-  width: 20%;
+  width: 22%;
   height: 25%;
 }
 
 .card.small-mode {
-  width: 25%;
+  width: 28%;
   height: 30%;
 }
 
@@ -365,6 +365,22 @@ body {
   }
 }
 
+@media screen and (max-width: 1440px) {
+  .information {
+    padding: 0rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .information p {
+    font-size: 1.5rem;
+  }
+
+  .cheat h3 {
+    font-size: 1.2rem;
+  }
+}
+
 /*Media query*/
 @media screen and (max-width: 842px) {
   html {
@@ -441,6 +457,7 @@ body {
   .cheat {
     margin-top: 6rem;
     position: relative;
+    font-family: monospace, sans-serif;
   }
 
   .cheat h3 {
