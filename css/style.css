@@ -23,6 +23,34 @@ header img {
 body {
   background: black;
   color: white;
+  font-family: cursive, sans-serif;
+}
+
+/*background themes classes*/
+
+body.tv-theme {
+  background: url('/assets/tv.png');
+  background-repeat: no-repeat;
+  /* background-size: cover; */
+  background-position: right;
+  background-size: 790px 1100px;
+  background-position-y: 400px;
+}
+
+body.dragon-ball-theme {
+  background: url('/assets/dragon-ball-z.png');
+  background-repeat: no-repeat;
+  background-position: right;
+  background-position-y: 400px;
+  background-size: 790px 1100px;
+}
+
+body.gaming-theme {
+  background: url('/assets/gaming.png');
+  background-repeat: no-repeat;
+  background-position: right;
+  background-position-y: 400px;
+  background-size: 790px 1100px;
 }
 
 .intro {
@@ -50,41 +78,45 @@ body {
   display: block;
 }
 
-.information #dashboard {
+.information #theme {
   position: absolute;
   top: 0;
   left: 1rem;
   font-size: 1.5rem;
-  font-family: cursive;
   letter-spacing: 3px;
 }
 
 .information p {
-  font-family: cursive, sans-serif;
-  padding: 3rem;
-  font-size: 2rem;
+  padding-right: 3rem;
+  font-size: 2.2rem;
 }
 
 /*general style for the dashboard*/
 
-#score, #time, #worst-score, #timer {
-  font-size: 1.3rem;
+#score, #time, #worst-score {
   margin: 0.5rem;
 }
 
 #time {
-  font-size: 2.5rem;
+  font-size: 3rem;
   color: red;
 }
 
 #score, #worst-score {
-  font-size: 2.2rem;
+  font-size: 2.5rem;
+  color: #fdd813;
 }
+
+#game-mode {
+  font-size: 2.5rem;
+  color: #9f05c5;
+}
+
+/*change user btn*/
 
 #change-user {
   background: #005b96;
   color: white;
-  font-family: cursive;
   border: 0;
   outline: 0;
   border-radius: 1rem;
@@ -165,14 +197,13 @@ body {
   margin: 0.5rem auto;
   text-align: center;
   font-size: 3rem;
-  font-family: cursive, sans-serif;
 }
 
 .welcome p {
   margin: 0.5rem;
 }
 
-.play-again-container.show, .pick-mode-container.show {
+.play-again-container.show, .pick-mode-container.show, .pick-theme-container.show {
   display: flex;
   opacity: 1;
 }
@@ -183,7 +214,7 @@ body {
 
 /*style for restart popup*/
 
-.play-again-container, .pick-mode-container {
+.play-again-container, .pick-mode-container, .pick-theme-container {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -204,7 +235,6 @@ body {
 
 .play-popup h2 {
   font-size: 3rem;
-  font-family: cursive;
   margin: 0.5rem;
   color: black;
 }
@@ -231,9 +261,9 @@ body {
   flex-direction: column;
 }
 
-/*style for pick-mode*/
+/*style for pick-mode/pick-theme popups*/
 
-.pick-mode-popup {
+.pick-mode-popup, .pick-theme-popup {
   text-align: center;
   background: #fff;
   display: inline-block;
@@ -241,7 +271,11 @@ body {
   border-radius: 1rem;
 }
 
-.pick-mode-popup h3 {
+/* .pick-theme-popup {
+  padding: 8rem;
+} */
+
+.pick-mode-popup h3, .pick-theme-popup h3 {
   font-size: 4rem;
   font-family: monospace, sans-serif;
   margin: 0.5rem;
@@ -252,9 +286,8 @@ body {
   font-size: 2rem;
 }
 
-.pick-mode-popup button {
-  padding: 1.5rem 5rem;
-  font-family: cursive, sans-serif;
+.pick-mode-popup button, .pick-theme-popup button {
+  padding: 1rem 3rem;
   border: 0;
   outline: 0;
   border-radius: 1rem;
@@ -262,15 +295,43 @@ body {
   margin: 1rem;
   color: white;
   font-size: 2rem;
+  font-family: cursive, sans-serif;
 }
 
-.pick-mode-popup button:hover {
+.pick-mode-popup button:hover, .pick-theme-popup button:hover {
   opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+/*style for pick-theme buttons*/
+
+#dragon-ball {
+  background: #f95b1a;
+}
+
+#tv {
+  background: #945b47;
+}
+
+#gaming {
+  background: #AA0000;
+}
+
+.goku-icon, .cartman-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.minecraft-icon {
+  width: 70px;
+  height: 40px;
+  border-radius: 50%;
 }
 
 /*style for pick-mode buttons*/
 
-#small {
+#easy {
   background: #368fd3;
 }
 
@@ -278,19 +339,19 @@ body {
   background: #1d0458;
 }
 
-#large {
+#hard {
   background: #9f41a4;
 }
 
 .cheat {
   position: absolute;
   left: 0;
+  bottom: 0;
   margin: 2rem;
   text-align: center;
 }
 
 .cheat h3 {
-  font-family: cursive;
   font-size: 1.5rem;
 }
 
@@ -303,7 +364,6 @@ body {
   padding: 1.5rem 4rem;
   border-radius: 1rem;
   cursor: pointer;
-  font-family: cursive;
   transition: all 2s ease;
   font-size: 2rem;
   animation: rainbow 3s infinite ease;
@@ -318,7 +378,6 @@ body {
 #made {
   display: block;
   font-size: 1rem;
-  font-family: cursive;
 }
 
 /*animations*/
@@ -368,17 +427,46 @@ body {
   }
 }
 
-@media screen and (max-width: 1440px) {
+@media screen and (max-width: 1574px) {
   .information {
-    padding: 0rem;
+    /* padding: 3rem; */
     display: flex;
     flex-direction: column;
   }
   .information p {
-    font-size: 1.5rem;
+    font-size: 2rem;
+    padding: 2rem;
+    font-weight: bold;
+  }
+  .information .time-p {
+    font-size: 3rem;
+    text-align: center;
+  }
+  #time {
+    display: block;
   }
   .cheat h3 {
     font-size: 1.2rem;
+  }
+  body.tv-theme, body.dragon-ball-theme {
+    background-position: center;
+    background-position-y: 600px;
+  }
+  .pick-theme-popup button {
+    width: 50%;
+    padding: 1rem 0rem;
+  }
+  .cheat {
+    position: relative;
+  }
+  .cheat h3 {
+    font-size: 2rem;
+  }
+  .cheat button {
+    width: 100%;
+  }
+  body {
+    font-family: Arial, Helvetica, sans-serif, sans-serif;
   }
 }
 
@@ -388,6 +476,12 @@ body {
   html {
     font-size: 45%;
   }
+  body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+  body.tv-theme, body.dragon-ball-theme, body.gaming-theme {
+    background: none;
+  }
   .intro h1 {
     font-size: 2.5rem;
   }
@@ -396,6 +490,26 @@ body {
     padding: 1rem;
     display: flex;
     flex-direction: column;
+  }
+  #score, #worst-score, #game-mode, #game-mode {
+    font-size: 2.5rem;
+    display: block;
+    text-align: center;
+  }
+  .information .time-p {
+    font-size: 3rem;
+    text-align: center;
+  }
+  #time {
+    display: block;
+    font-size: 3rem;
+    text-align: center;
+  }
+  #name {
+    font-size: 2rem;
+  }
+  .information p {
+    font-size: 4rem;
   }
   #change-user {
     padding: 1rem;
@@ -418,9 +532,6 @@ body {
     height: 10rem;
     width: 10rem;
   }
-  #time {
-    font-size: 2rem;
-  }
   .cards-container {
     /* min-height: 80vh; */
     display: flex;
@@ -434,6 +545,7 @@ body {
     height: 20%;
     margin: 1rem;
   }
+  /*Cards sizes on mobile in different modoes*/
   .card.medium-mode {
     width: 28%;
     height: 15%;
@@ -446,6 +558,7 @@ body {
     width: 28%;
     height: 12%;
   }
+  /*cheat btn*/
   .cheat {
     margin-top: 6rem;
     position: relative;
@@ -467,17 +580,23 @@ body {
     text-align: center;
     margin: auto;
   }
-  .pick-mode-popup {
+  /*popups*/
+  .pick-mode-popup, .pick-theme-popup {
     padding: 4rem;
     display: flex;
     flex-direction: column;
   }
-  .pick-mode-popup h3 {
-    font-size: 3.5rem;
+  .pick-theme-popup button, .pick-mode-popup button {
+    font-size: 3rem;
+    width: 100%;
+    font-family: monospace, sans-serif;
+    font-weight: bold;
+  }
+  .pick-mode-popup h3, .pick-theme-popup h3 {
+    font-size: 3.2rem;
   }
   .play-popup h2 {
     font-size: 1.9rem;
-    font-family: cursive;
     margin: 0.5rem;
     color: black;
   }

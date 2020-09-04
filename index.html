@@ -18,106 +18,149 @@
     <header>
         <div class="intro">
             <h1>Memory Cards Challange | CA <span id="made">Made with ❤️ by Idan Atiya</span></h1>
-            <img id="logo" src="assets/pepe1.png" alt="logo">
+            <!-- <img id="logo" src="assets/pepe1.png" alt="logo"> -->
         </div>
         <div class="welcome">
             <button id="change-user" onclick="changeUser()">♲ Change User</button>
             <p><span id="name"></span></p>
         </div>
         <div class="information">
-            <!-- <span id="dashboard">Dashboard</span> -->
+            <span id="theme">Theme: <span id="current-theme"></span></span>
             <p>🏆 Best Score:<span id="score"></span></p>
             <p> 👻 Worst Score:<span id="worst-score"></span></p>
-            <p>⏲️ Time:<span id="time">Game has not started</span></p>
+            <p class="time-p">⏲️ Time:<span id="time">Game has not started</span></p>
             <p class="mode">Mode: <span id="game-mode"></span></p>
         </div>
     </header>
     <div class="cards-container">
         <div class="card" data-card="1" onclick="cardClicked(this)">
-            <img src="cards/card1.png" />
+            <img class="dragon-ball" src="cards/card1.png" />
+            <img src="gamingcards/card1.png" class="gaming" />
+            <img src="tv/card1.png" class="tv" />
             <img class="back" src="cards/back.png" alt="">
         </div>
         <div class="card" data-card="2" onclick="cardClicked(this)">
-            <img src="cards/card2.png" alt="">
+            <img src="cards/card2.png" alt="" class="dragon-ball">
+            <img src="gamingcards/card2.png" class="gaming" />
+            <img src="tv/card2.png" class="tv" />
+
             <img class="back" src="cards/back.png" alt="">
 
         </div>
         <div class="card" data-card="3" onclick="cardClicked(this)">
-            <img src="cards/card3.png" alt="">
+            <img src="cards/card3.png" alt="" class="dragon-ball">
+            <img src="gamingcards/card3.png" class="gaming" />
+            <img src="tv/card3.png" class="tv" />
+
             <img class="back" src="cards/back.png" alt="">
         </div>
 
         <div class="card" data-card="4" onclick="cardClicked(this)">
-            <img src="cards/card4.png" alt="">
+            <img src="cards/card4.png" alt="" class="dragon-ball">
+            <img src="gamingcards/card4.png" class="gaming" />
+            <img src="tv/card4.png" class="tv" />
             <img class="back" src="cards/back.png" alt="">
         </div>
         <div class="card" data-card="5" onclick="cardClicked(this)">
-            <img src="cards/card5.png" />
+            <img src="cards/card5.png" class="dragon-ball" />
+            <img src="gamingcards/card5.png" class="gaming" />
+            <img src="tv/card5.png" class="tv" />
             <img class="back" src="cards/back.png" alt="">
         </div>
         <div class="card" data-card="6" onclick="cardClicked(this)">
-            <img src="cards/card6.png" />
+            <img src="cards/card6.png" class="dragon-ball" />
+            <img src="gamingcards/card6.png" class="gaming" />
+            <img src="tv/card6.png" class="tv" />
             <img class="back" src="cards/back.png" alt="">
         </div>
         <div class="card" data-card="4" onclick="cardClicked(this)">
-            <img src="cards/card4.png" alt="">
+            <img src="cards/card4.png" alt="" class="dragon-ball">
+            <img src="gamingcards/card4.png" class="gaming" />
+            <img src="tv/card4.png" class="tv" />
             <img class="back" src="cards/back.png" alt="">
 
         </div>
         <div class="card" data-card="3" onclick="cardClicked(this)">
-            <img src="cards/card3.png" alt="">
+            <img src="cards/card3.png" alt="" class="dragon-ball">
+            <img src="gamingcards/card3.png" class="gaming" />
+            <img src="tv/card3.png" class="tv" />
             <img class="back" src="cards/back.png" alt="">
 
         </div>
         <div class="card" data-card="2" onclick="cardClicked(this)">
-            <img src="cards/card2.png" alt="">
+            <img src="cards/card2.png" alt="" class="dragon-ball">
+            <img src="gamingcards/card2.png" class="gaming" />
+            <img src="tv/card2.png" class="tv" />
+
             <img class="back" src="cards/back.png" alt="">
         </div>
         <div class="card" data-card="1" onclick="cardClicked(this)">
-            <img src="cards/card1.png" />
+            <img src="cards/card1.png" class="dragon-ball" />
+            <img src="gamingcards/card1.png" class="gaming" />
+            <img src="tv/card1.png" class="tv" />
             <img class="back" src="cards/back.png" alt="">
         </div>
         <div class="card" data-card="5" onclick="cardClicked(this)">
-            <img src="cards/card5.png" />
+            <img src="cards/card5.png" class="dragon-ball" />
+            <img src="gamingcards/card5.png" class="gaming" />
+            <img src="tv/card5.png" class="tv" />
             <img class="back" src="cards/back.png" alt="">
         </div>
         <div class="card" data-card="6" onclick="cardClicked(this)">
-            <img src="cards/card6.png" />
+            <img src="cards/card6.png" class="dragon-ball" />
+            <img src="gamingcards/card6.png" class="gaming" />
+            <img src="tv/card6.png" class="tv" />
             <img class="back" src="cards/back.png" alt="">
         </div>
         <!--Expand to other modes-->
-        <div class="card large" data-card="7" onclick="cardClicked(this)">
-            <img src="cards/card7.png" />
+        <div class="card" data-card="7" onclick="cardClicked(this)">
+            <img src="cards/card7.png" class="dragon-ball" />
+            <img src="gamingcards/card7.png" class="gaming" />
+            <img src="tv/card7.png" class="tv" />
             <img class="back" src="cards/back.png" alt="">
         </div>
-        <div class="card large" data-card="7" onclick="cardClicked(this)">
-            <img src="cards/card7.png" />
+        <div class="card" data-card="7" onclick="cardClicked(this)">
+            <img src="cards/card7.png" class="dragon-ball" />
+            <img src="gamingcards/card7.png" class="gaming" />
+            <img src="tv/card7.png" class="tv" />
             <img class="back" src="cards/back.png" alt="">
         </div>
-        <div class="card large" data-card="8" onclick="cardClicked(this)">
-            <img src="cards/card8.png" />
+        <div class="card" data-card="8" onclick="cardClicked(this)">
+            <img src="cards/card8.png" class="dragon-ball" />
+            <img src="gamingcards/card8.png" class="gaming" />
+            <img src="tv/card8.png" class="tv" />
             <img class="back" src="cards/back.png" alt="">
         </div>
-        <div class="card large" data-card="8" onclick="cardClicked(this)">
-            <img src="cards/card8.png" />
+        <div class="card" data-card="8" onclick="cardClicked(this)">
+            <img src="cards/card8.png" class="dragon-ball" />
+            <img src="gamingcards/card8.png" class="gaming" />
+            <img src="tv/card8.png" class="tv" />
             <img class="back" src="cards/back.png" alt="">
         </div>
-        <div class="card large" data-card="9" onclick="cardClicked(this)">
-            <img src="cards/card9.png" alt="">
+        <div class="card" data-card="9" onclick="cardClicked(this)">
+            <img src="cards/card9.png" alt="" class="dragon-ball">
+            <img src="gamingcards/card9.png" class="gaming" />
+            <img src="tv/card9.png" class="tv" />
             <img class="back" src="cards/back.png" alt="">
 
         </div>
-        <div class="card large" data-card="9" onclick="cardClicked(this)">
-            <img src="cards/card9.png" alt="">
+        <div class="card" data-card="9" onclick="cardClicked(this)">
+            <img src="cards/card9.png" alt="" class="dragon-ball">
+            <img src="gamingcards/card9.png" class="gaming" />
+            <img src="tv/card9.png" class="tv" />
             <img class="back" src="cards/back.png" alt="">
         </div>
-        <div class="card large" data-card="10" onclick="cardClicked(this)">
-            <img src="cards/card10.png" alt="">
+        <div class="card" data-card="10" onclick="cardClicked(this)">
+            <img src="cards/card10.png" alt="" class="dragon-ball">
+            <img src="gamingcards/card10.png" class="gaming" />
+            <img src="tv/card10.png" class="tv" />
             <img class="back" src="cards/back.png" alt="">
 
         </div>
-        <div class="card large" data-card="10" onclick="cardClicked(this)">
-            <img src="cards/card10.png" alt="">
+        <div class="card" data-card="10" onclick="cardClicked(this)">
+            <img src="cards/card10.png" alt="" class="dragon-ball">
+            <img src="gamingcards/card10.png" class="gaming" />
+            <img src="tv/card10.png" class="tv" />
             <img class="back" src="cards/back.png" alt="">
         </div>
 
@@ -135,9 +178,21 @@
     <div class="pick-mode-container">
         <div class="pick-mode-popup">
             <h3>Pick Game Mode</h3>
-            <button id="small" onclick="pickMode(this)">Easy</button>
+            <button id="easy" onclick="pickMode(this)">Easy</button>
             <button id="medium" onclick="pickMode(this)">Medium</button>
-            <button id="large" onclick="pickMode(this)">Hard</button>
+            <button id="hard" onclick="pickMode(this)">Hard</button>
+        </div>
+    </div>
+    <div class="pick-theme-container">
+        <div class="pick-theme-popup">
+            <h3>Pick Website Theme</h3>
+            <button id="dragon-ball" onclick="pickTheme(this)"><img src="assets/gokuhead.png" class="goku-icon" />
+                Dragon
+                Ball</button>
+            <button id="tv" onclick="pickTheme(this)"><img src="assets/cartman-head.png" class="cartman-icon" />
+                Tv Shows</button>
+            <button id="gaming" onclick="pickTheme(this)"><img src="assets/minecrafticon.png"
+                    class="minecraft-icon" />Gaming</button>
         </div>
     </div>
     <script src="js/game.js"></script>

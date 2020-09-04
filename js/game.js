@@ -1,20 +1,45 @@
 /*Selectors*/
 const elAllCards = document.querySelectorAll('.card');
 const playBtn = document.querySelector('#play-game');
+//Containers
 const playAgainContainer = document.querySelector('.play-again-container');
 const pickModeContainer = document.querySelector('.pick-mode-container');
+const pickThemeContainer = document.querySelector('.pick-theme-container');
+console.log(pickThemeContainer)
+
 
 const elGameModeSpan = document.querySelector('#game-mode');
 
+//selectg all imgs that doesnt have a .back class
+const allCardsImgs = document.querySelectorAll('.card img:not(.back)');
+console.log(allCardsImgs)
+
+const allGamingCards = document.querySelectorAll('.card img.gaming');
+
+
+
+
+
+
 const elNameSpan = document.querySelector('#name');
 const elTimeSpan = document.querySelector('#time');
+const elCurrentTheme = document.querySelector('#current-theme');
+
 const elBestScoreSpan = document.querySelector('#score');
 const elWorstScoreSpan = document.querySelector('#worst-score');
 
 /*Load music*/
-const correctAudio = new Audio('sound/right.mp3');
-const wrongAudio = new Audio('sound/wrong.mp3');
-const winAudio = new Audio('sound/win.mp3');
+const wrongAudio = new Audio('sound/wrong.wav');
+/*dragon-ball theme music*/
+const winAudioDbTheme = new Audio('sound/dragon-ball/win-db.wav')
+const correctAudioDbTheme = new Audio('sound/dragon-ball/correct-db.mp3')
+/*gaming theme music*/
+const winAudioGamingTheme = new Audio('sound/gaming/win-gaming.wav');
+const correctGamingAudio = new Audio('sound/gaming/correct-gaming.wav');
+/*tv theme music*/
+const winAudioTvTheme = new Audio('sound/tv/win-tv.mp3');
+const correctAudioTvTheme = new Audio('sound/tv/right.mp3');
+
 
 //Number of card pairs
 let TOTAL_CARD_PAIRS = 6;
@@ -23,16 +48,82 @@ let flippedCards = 0;
 //Control that only 2 cards can be flipped
 let isCardProcessing = false;
 //count seconds
-let counter = 0;
+let timeCounter = 0;
 let isGameStarted = false;
 //interval for the timer
-let interval = null;
+let timerInterval = null;
 //game mode
 let gameMode = null;
+let websiteTheme = null;
 
 elAllCards.forEach((card) => {
   card.style.display = 'none';
 });
+
+
+
+function pickTheme(btn) {
+  console.log(btn.id)
+  switch (btn.id) {
+    //theme case
+    case "gaming":
+      websiteTheme = 'gaming';
+      elCurrentTheme.innerText = 'Gaming';
+      //loop through all imgs and check and hide the imgs that do not have a gaming class
+      allCardsImgs.forEach(cardImg => {
+        if (!cardImg.classList.contains('gaming')) {
+          cardImg.style.display = 'none';
+        }
+        if (document.body.classList.contains('dragon-ball-theme') || document.body.classList.contains('tv-theme')) {
+          document.body.classList.remove('dragon-ball-theme')
+          document.body.classList.remove('tv-theme')
+        }
+        document.body.classList.add('gaming-theme')
+      })
+      pickThemeContainer.classList.remove('show');
+      document.body.style.backgroundColor = 'black';
+      break;
+    case "dragon-ball":
+      websiteTheme = 'dragon-ball';
+      elCurrentTheme.innerText = 'Dragon-Ball';
+      allCardsImgs.forEach(cardImg => {
+        if (!cardImg.classList.contains('dragon-ball')) {
+          cardImg.style.display = 'none'
+        }
+      })
+      pickThemeContainer.classList.remove('show')
+      if (document.body.classList.contains('gaming-theme') || document.body.classList.contains('tv-theme')) {
+        document.body.classList.remove('gaming-theme')
+        document.body.classList.remove('southpark-theme')
+      }
+      document.body.classList.add('dragon-ball-theme');
+      document.body.style.backgroundColor = 'black'
+      break;
+    case "tv":
+      websiteTheme = 'tv';
+      elCurrentTheme.innerText = 'Tv';
+      allCardsImgs.forEach(cardImg => {
+        if (!cardImg.classList.contains('tv')) {
+          cardImg.style.display = 'none'
+        }
+      })
+      pickThemeContainer.classList.remove('show')
+      if (document.body.classList.contains('gaming-theme') || document.body.classList.contains('dragon-ball-theme')) {
+        document.body.classList.remove('gaming-theme')
+        document.body.classList.remove('dragon-ball-theme')
+      }
+      document.body.classList.add('tv-theme')
+      document.body.style.backgroundColor = 'black'
+      break;
+
+  }
+}
+
+
+
+
+
+
 
 function cardClicked(elCard) {
   //Check if card is still flipped
@@ -46,7 +137,7 @@ function cardClicked(elCard) {
     if (!isGameStarted) {
       isGameStarted = true;
       //Start the timer
-      interval = setInterval(stopWatch, 10);
+      timerInterval = setInterval(stopWatch, 10);
     }
     console.log('first card');
     elPrevCard = elCard;
@@ -59,38 +150,56 @@ function cardClicked(elCard) {
   }
 }
 
-//Check if cards match and victory
-function checkCardsMatch(card1, card2) {
-  let firstCard = +card1.getAttribute('data-card');
-  let secondCard = +card2.getAttribute('data-card');
-  //if the cards data-card matches
-  if (firstCard === secondCard) {
-    console.log('cards match');
+
+function checkCardsMatch(elCard1, elCard2) {
+  let dataIdxCard1 = elCard1.getAttribute('data-card');
+  let dataIdxCard2 = elCard2.getAttribute('data-card');
+  if (dataIdxCard1 === dataIdxCard2) {
     flippedCards++;
     //add to both cards a 'found' class if they have been found in order to know that i dont need to flip them back in cheat mode.
-    card1.classList.add('found');
-    card2.classList.add('found');
-    if (flippedCards !== TOTAL_CARD_PAIRS) {
-      correctAudio.play();
-    }
-    if (flippedCards === TOTAL_CARD_PAIRS) {
-      console.log('You won!');
-      winAudio.play();
-      //Show restart game container
-      playAgainContainer.classList.add('show');
+    elCard1.classList.add('found');
+    elCard2.classList.add('found');
+    switch (websiteTheme) {
+      case 'dragon-ball':
+        if (flippedCards === TOTAL_CARD_PAIRS) {
+          winAudioDbTheme.play()
+          playAgainContainer.classList.add('show');
+        } else {
+          console.log('good guess')
+          correctAudioDbTheme.play();
+        }
+        break;
+      case 'gaming':
+        if (flippedCards === TOTAL_CARD_PAIRS) {
+          winAudioGamingTheme.play();
+          playAgainContainer.classList.add('show');
+        } else {
+          correctGamingAudio.play();
+        }
+        break;
+      case 'tv':
+        if (flippedCards === TOTAL_CARD_PAIRS) {
+          winAudioTvTheme.play();
+          playAgainContainer.classList.add('show');
+        } else {
+          correctAudioTvTheme.play();
+          console.log('good guess')
+        }
+        break;
+
     }
   } else {
     wrongAudio.play();
-    //as long as this var is true we can't click on other cards
     isCardProcessing = true;
     setTimeout(() => {
-      card1.classList.remove('flipped');
-      card2.classList.remove('flipped');
+      elCard1.classList.remove('flipped');
+      elCard2.classList.remove('flipped');
       //only after we remove the flipped class from both cards set this var to be false and then user can click on cards again
       isCardProcessing = false;
     }, 1500);
   }
 }
+
 
 //this function rest all the neccessary things of the game
 function restartGame() {
@@ -101,6 +210,11 @@ function restartGame() {
     card.classList.remove('flipped');
     card.classList.remove('found');
   });
+
+  //unhide all cards
+  allCardsImgs.forEach(cardImg => {
+    cardImg.style.display = 'flex';
+  })
   //rest flipped cards
   flippedCards = 0;
   //remove restart popup
@@ -108,8 +222,8 @@ function restartGame() {
   //set the game back to false
   isGameStarted = false;
   //update game stats
-  gameStats(counter);
-  counter = 0;
+  gameStats(timeCounter);
+  timeCounter = 0;
   //Rest the timer variables
   elTimeSpan.innerText = `Click a card to start`;
   seconds = 0;
@@ -119,8 +233,12 @@ function restartGame() {
   formatted = null;
   //Restart cheat feature
   isCheated = false;
+  //show theme container
+  pickThemeContainer.classList.add('show')
   //show pick mode container
-  pickModeContainer.classList.add('show');
+  setTimeout(() => {
+    pickModeContainer.classList.add('show');
+  }, 1300)
 }
 
 //set score and get stats from localStorage
@@ -225,11 +343,7 @@ function changeUser() {
     name = 'Anonymous';
   }
   localStorage.setItem('name', name);
-  elNameSpan.innerText = `${
-    name !== null
-      ? `Welcome, ${localStorage.getItem('name')} 😜 !`
-      : `Welcome,Anonymous! 💀`
-    }`;
+  elNameSpan.innerText = `Welcome, ${localStorage.getItem('name')} 😜!`
 }
 
 //load data from localStorage when page refreshes
@@ -239,68 +353,31 @@ function getLocalStorageData() {
     user === null || user === ''
       ? 'Welcome Anonymous User!'
       : `Welcome, ${user} 😜!`
-    }`;
-
-  // //Show the current Best score and the current Worst score based on the game MODE!
-  // switch (gameMode) {
-  //   case 1:
-  //     let hardBestScore = formatCounterToTime(
-  //       localStorage.getItem('bestScoreHard')
-  //     );
-  //     elBestScoreSpan.innerText = `${
-  //       !hardBestScore === null ? 'None' : `${hardBestScore}`
-  //     }`;
-  //     let worstScoreHard = formatCounterToTime(
-  //       localStorage.getItem('worstScoreHard')
-  //     );
-  //     elWorstScoreSpan.innerText = `${
-  //       worstScoreHard === null ? 'None' : `${worstScoreHard}`
-  //     }`;
-  //     break;
-  //   case 2:
-  //     let mediumBestScore = formatCounterToTime(
-  //       localStorage.getItem('bestScoreMedium')
-  //     );
-  //     elBestScoreSpan.innerText = `${
-  //       mediumBestScore === null ? 'None' : `${mediumBestScore}`
-  //     }`;
-  //     let mediumWorstScore = formatCounterToTime(
-  //       localStorage.getItem('worstScoreMedium')
-  //     );
-  //     elWorstScoreSpan.innerText = `${
-  //       mediumWorstScore === null ? 'None' : `${mediumWorstScore}`
-  //     }`;
-  //     break;
-  //   case 3:
-  //     let easyBestScore = formatCounterToTime(
-  //       localStorage.getItem('bestScoreEasy')
-  //     );
-  //     elBestScoreSpan.innerText = `${
-  //       easyBestScore === null ? 'None' : `${easyBestScore}`
-  //     }`;
-  //     let easyWorstScore = formatCounterToTime(
-  //       localStorage.getItem('worstScoreEasy')
-  //     );
-  //     elWorstScoreSpan.innerText = `${
-  //       easyWorstScore === null ? 'None' : `${easyWorstScore}`
-  //     }`;
-  //     break;
+    } `;
 }
 
 //check if we already have a name, if not we get the user name
 if (localStorage.getItem('name') === null) {
-  pickModeContainer.classList.add('show');
+  pickThemeContainer.classList.add('show')
   changeUser();
+  setTimeout(() => {
+    pickModeContainer.classList.add('show');
+  }, 1300)
 }
+
+
+
 
 /*Shuffle all Cards in random positions!*/
 function shuffleCards() {
   elAllCards.forEach((card) => {
     //generate a random num
     let randPosition = Math.floor(Math.random() * elAllCards.length);
-    card.style.order = `${randPosition}`;
+    card.style.order = `${randPosition} `;
   });
 }
+
+
 
 //Stopwatch variables
 let miliSeconds = 0;
@@ -310,14 +387,13 @@ let hours = 0;
 function stopWatch() {
   //check if i flipped all cards, if so we stop the clock
   if (flippedCards === TOTAL_CARD_PAIRS) {
-    clearInterval(interval);
+    clearInterval(timerInterval);
     console.log('interval cleaned');
   }
   miliSeconds += 10;
   if (miliSeconds >= 1000) {
     miliSeconds = 0;
-    counter++;
-    console.log('counter is', counter);
+    timeCounter++;
     seconds++;
     //if seconds /60 is 1 then rest seconds
     if (seconds / 60 === 1) {
@@ -342,6 +418,8 @@ function stopWatch() {
   //Display the stopwatch
   elTimeSpan.innerText = `${displayHours}:${displayMinutes}:${displaySeconds}.${displayMiliSeconds}`;
 }
+
+
 
 //Show the cards for a X amount of seconds in the beginning when we pick a mode.
 function showCards(amountOfSeconds) {
@@ -398,7 +476,7 @@ function cheat(btn) {
 function pickMode(btn) {
   console.log(btn.id);
   switch (btn.id) {
-    case 'large':
+    case 'hard':
       gameMode = 1;
       TOTAL_CARD_PAIRS = 10;
       //show current game-mode
@@ -409,7 +487,7 @@ function pickMode(btn) {
       elWorstScoreSpan.innerText = formatCounterToTime(
         localStorage.getItem('worstScoreHard')
       );
-      showCards(5000);
+      showCards(4000);
       //Show the cards for x amount of seconds
       elAllCards.forEach((card) => {
         let dataCard = card.getAttribute('data-card');
@@ -437,7 +515,8 @@ function pickMode(btn) {
       elBestScoreSpan.innerText = formatCounterToTime(
         localStorage.getItem('bestScoreMedium')
       );
-      elWorstScoreSpan.innerText = formatCounterToTime(localStorage.getItem('worstScoreMedium')
+      elWorstScoreSpan.innerText = formatCounterToTime(
+        localStorage.getItem('worstScoreMedium')
       );
       showCards(3000);
       elAllCards.forEach((card) => {
@@ -459,7 +538,7 @@ function pickMode(btn) {
         pickModeContainer.classList.remove('show');
       });
       break;
-    case 'small':
+    case 'easy':
       gameMode = 3;
       TOTAL_CARD_PAIRS = 4;
       elGameModeSpan.innerText = `Easy`;
@@ -495,5 +574,9 @@ function pickMode(btn) {
 //Load data from localStorage
 document.addEventListener('DOMContentLoaded', getLocalStorageData);
 //show mode
-pickModeContainer.classList.add('show');
+pickThemeContainer.classList.add('show')
+setTimeout(() => {
+  pickModeContainer.classList.add('show');
+}, 1000)
+//shuffle the cards evreytime the game lodas
 shuffleCards();
