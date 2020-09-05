@@ -427,6 +427,31 @@ body.gaming-theme {
   }
 }
 
+@media screen and (max-width: 1670px) {
+  body.tv-theme {
+    background-position-y: 750px;
+    background-size: 500px;
+  }
+  body.gaming-theme, body.dragon-ball-theme {
+    background-size: 500px 600px;
+    background-position-y: 600px;
+  }
+  .information p {
+    font-size: 2rem;
+    padding: 1rem;
+  }
+  .information {
+    display: flex;
+    flex-direction: column;
+  }
+  .cheat {
+    position: relative;
+  }
+  .cheat button {
+    width: 100%;
+  }
+}
+
 @media screen and (max-width: 1574px) {
   .information {
     /* padding: 3rem; */
@@ -448,9 +473,12 @@ body.gaming-theme {
   .cheat h3 {
     font-size: 1.2rem;
   }
-  body.tv-theme, body.dragon-ball-theme {
-    background-position: center;
-    background-position-y: 600px;
+  body.dragon-ball-theme, body.gaming-theme {
+    /* background-position: center; */
+    background-position-y: 750px;
+  }
+  body.tv-theme {
+    background-position-y: 900px;
   }
   .pick-theme-popup button {
     width: 50%;
@@ -464,9 +492,6 @@ body.gaming-theme {
   }
   .cheat button {
     width: 100%;
-  }
-  body {
-    font-family: Arial, Helvetica, sans-serif, sans-serif;
   }
 }
 

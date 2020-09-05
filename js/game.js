@@ -1,6 +1,5 @@
-/*Selectors*/
+
 const elAllCards = document.querySelectorAll('.card');
-const playBtn = document.querySelector('#play-game');
 //Containers
 const playAgainContainer = document.querySelector('.play-again-container');
 const pickModeContainer = document.querySelector('.pick-mode-container');
@@ -11,14 +10,8 @@ console.log(pickThemeContainer)
 const elGameModeSpan = document.querySelector('#game-mode');
 
 //selectg all imgs that doesnt have a .back class
-const allCardsImgs = document.querySelectorAll('.card img:not(.back)');
-console.log(allCardsImgs)
-
-const allGamingCards = document.querySelectorAll('.card img.gaming');
-
-
-
-
+const elAllCardsImgs = document.querySelectorAll('.card img:not(.back)');
+console.log(elAllCardsImgs)
 
 
 const elNameSpan = document.querySelector('#name');
@@ -70,7 +63,7 @@ function pickTheme(btn) {
       websiteTheme = 'gaming';
       elCurrentTheme.innerText = 'Gaming';
       //loop through all imgs and check and hide the imgs that do not have a gaming class
-      allCardsImgs.forEach(cardImg => {
+      elAllCardsImgs.forEach(cardImg => {
         if (!cardImg.classList.contains('gaming')) {
           cardImg.style.display = 'none';
         }
@@ -86,7 +79,7 @@ function pickTheme(btn) {
     case "dragon-ball":
       websiteTheme = 'dragon-ball';
       elCurrentTheme.innerText = 'Dragon-Ball';
-      allCardsImgs.forEach(cardImg => {
+      elAllCardsImgs.forEach(cardImg => {
         if (!cardImg.classList.contains('dragon-ball')) {
           cardImg.style.display = 'none'
         }
@@ -94,7 +87,7 @@ function pickTheme(btn) {
       pickThemeContainer.classList.remove('show')
       if (document.body.classList.contains('gaming-theme') || document.body.classList.contains('tv-theme')) {
         document.body.classList.remove('gaming-theme')
-        document.body.classList.remove('southpark-theme')
+        document.body.classList.remove('tv-theme')
       }
       document.body.classList.add('dragon-ball-theme');
       document.body.style.backgroundColor = 'black'
@@ -102,7 +95,7 @@ function pickTheme(btn) {
     case "tv":
       websiteTheme = 'tv';
       elCurrentTheme.innerText = 'Tv';
-      allCardsImgs.forEach(cardImg => {
+      elAllCardsImgs.forEach(cardImg => {
         if (!cardImg.classList.contains('tv')) {
           cardImg.style.display = 'none'
         }
@@ -212,7 +205,7 @@ function restartGame() {
   });
 
   //unhide all cards
-  allCardsImgs.forEach(cardImg => {
+  elAllCardsImgs.forEach(cardImg => {
     cardImg.style.display = 'flex';
   })
   //rest flipped cards
