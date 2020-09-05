@@ -29,7 +29,7 @@ body {
 /*background themes classes*/
 
 body.tv-theme {
-  background: url('/assets/tv.png');
+  background: url('../assets/tv.png');
   background-repeat: no-repeat;
   /* background-size: cover; */
   background-position: right;
@@ -38,7 +38,7 @@ body.tv-theme {
 }
 
 body.dragon-ball-theme {
-  background: url('/assets/dragon-ball-z.png');
+  background-image: url('../assets/dragon-ball-z.png');
   background-repeat: no-repeat;
   background-position: right;
   background-position-y: 400px;
@@ -46,7 +46,7 @@ body.dragon-ball-theme {
 }
 
 body.gaming-theme {
-  background: url('/assets/gaming.png');
+  background: url('../assets/gaming.png');
   background-repeat: no-repeat;
   background-position: right;
   background-position-y: 400px;
